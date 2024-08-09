@@ -44,12 +44,6 @@ public class EmailService {
             }
             props.put("mail.debug", "true");
 
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom(emailConfig.getUsername());
-//        message.setTo(to);
-//        message.setSubject(subject);
-//        message.setText(text);
-
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
