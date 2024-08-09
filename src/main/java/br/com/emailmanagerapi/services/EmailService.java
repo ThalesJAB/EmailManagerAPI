@@ -27,29 +27,22 @@ import java.util.Properties;
 public class EmailService {
     public void sendSimpleMessage(EmailConfig emailConfig, String to, String subject, String text, String displayName) {
         try {
-        JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
-        emailSender.setHost(emailConfig.getSmtpHost());
-        emailSender.setPort(emailConfig.getSmtpPort());
-        emailSender.setUsername(emailConfig.getUsername());
-        emailSender.setPassword(emailConfig.getPassword());
+            JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
+            emailSender.setHost(emailConfig.getSmtpHost());
+            emailSender.setPort(emailConfig.getSmtpPort());
+            emailSender.setUsername(emailConfig.getUsername());
+            emailSender.setPassword(emailConfig.getPassword());
 
-        Properties props = emailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        if (emailConfig.isSmtpStartTlsEnable()) {
-            props.put("mail.smtp.starttls.enable", "true");
-        }
-        if (emailConfig.isSmtpSslEnable()) {
-            props.put("mail.smtp.ssl.enable", "true");
-        }
-        props.put("mail.debug", "true");
-//
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom(emailConfig.getUsername());
-//        message.setTo(to);
-//        message.setSubject(subject);
-//        message.setText(text);
-
+            Properties props = emailSender.getJavaMailProperties();
+            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.smtp.auth", "true");
+            if (emailConfig.isSmtpStartTlsEnable()) {
+                props.put("mail.smtp.starttls.enable", "true");
+            }
+            if (emailConfig.isSmtpSslEnable()) {
+                props.put("mail.smtp.ssl.enable", "true");
+            }
+            props.put("mail.debug", "true");
 
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -63,7 +56,7 @@ public class EmailService {
             helper.setSubject(subject);
             helper.setText(text, true);
 
-        emailSender.send(message);
+            emailSender.send(message);
         } catch (MessagingException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -185,10 +178,4 @@ public class EmailService {
         return document.text();
     }
 
-//    private static String detectCharset(byte[] bytes) {
-//        UniversalDetector detector = new UniversalDetector(null);
-//        detector.handleData(bytes, 0, bytes.length);
-//        detector.dataEnd();
-//        return detector.getDetectedCharset();
-//    }
 }
